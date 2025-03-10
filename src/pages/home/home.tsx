@@ -45,7 +45,7 @@ const Home = ({ addDishToBasket, handleSyncBasketWithDishes }: HomeProps) => {
 
   useEffect(() => {
     fetchDishes();
-  }, [fetchDishes]);
+  }, []);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
