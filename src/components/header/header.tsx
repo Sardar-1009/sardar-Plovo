@@ -28,10 +28,13 @@ const Header = ({ totalCount }: HeaderProps) => {
         >
           My Plovo App
         </Typography>
-        
+
+
+        <Link to="/check-out" style={{ textDecoration: 'none', color: 'inherit' }}>
         <Badge badgeContent={totalCount} color="error" sx={{ mx: 2 }}>
           <ShoppingCartIcon />
         </Badge>
+        </Link>
         
         <Link to="/add-dish" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Typography variant="h6" component="div" sx={{ cursor: "pointer" }}>

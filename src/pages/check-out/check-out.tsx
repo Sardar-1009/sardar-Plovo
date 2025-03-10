@@ -68,7 +68,7 @@ const Checkout = ({ basketState, setBasketState }: CheckoutProps) => {
         completed: false
       };
 
-      await axios.post('https://your-firebase-url/orders.json', orderData);
+      await axios.post('https://sardar-plovo-default-rtdb.europe-west1.firebasedatabase.app/', orderData);
       
 
       const emptyBasket = {
