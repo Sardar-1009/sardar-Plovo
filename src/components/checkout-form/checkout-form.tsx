@@ -1,51 +1,49 @@
-// components/dish-form/dish-form.tsx
+import { Box, TextField, Button, Grid, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Box, TextField, Button, Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-// Assuming you have types defined
-interface DishData {
+interface CustomerData {
   name: string;
-  description: string;
-  price: number;
-  // Add other fields as needed
+  address: string;
+  phone: string;
 }
 
-interface DishFormProps {
-  onSubmit: (data: DishData) => void;
+interface CheckoutFormProps {
+  onSubmit: (data: CustomerData) => void;
   isSubmitting: boolean;
 }
 
-const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
-  const [formData, setFormData] = useState<DishData>({
+const CheckoutForm = ({ onSubmit, isSubmitting }: CheckoutFormProps) => {
+  const [formData, setFormData] = useState<CustomerData>({
     name: '',
-    description: '',
-    price: 0,
-    // Initialize other fields as needed
+    address: '',
+    phone: ''
   });
 
   const [errors, setErrors] = useState({
     name: '',
-    description: '',
-    price: '',
-    // Initialize error fields for validation
+    address: '',
+    phone: ''
   });
 
   const validateForm = (): boolean => {
     let isValid = true;
-    const newErrors = { name: '', description: '', price: '' };
+    const newErrors = { name: '', address: '', phone: '' };
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Dish name is required';
+      newErrors.name = 'Имя получателя обязательно';
       isValid = false;
     }
 
-    if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
+    if (!formData.address.trim()) {
+      newErrors.address = 'Адрес доставки обязателен';
       isValid = false;
     }
 
-    if (!formData.price || formData.price <= 0) {
-      newErrors.price = 'Price must be greater than 0';
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Номер телефона обязателен';
+      isValid = false;
+    } else if (!/^\+?[0-9]{10,12}$/.test(formData.phone.trim())) {
+      newErrors.phone = 'Неверный формат телефона';
       isValid = false;
     }
 
@@ -57,7 +55,7 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'price' ? parseFloat(value) || 0 : value
+      [name]: value
     }));
   };
 
@@ -71,11 +69,14 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
+      <Typography variant="h5" gutterBottom>
+        Данные для доставки
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Dish Name"
+            label="Имя получателя"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -87,31 +88,27 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Description"
-            name="description"
-            multiline
-            rows={4}
-            value={formData.description}
+            label="Адрес доставки"
+            name="address"
+            value={formData.address}
             onChange={handleChange}
-            error={!!errors.description}
-            helperText={errors.description}
+            error={!!errors.address}
+            helperText={errors.address}
             required
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Price (som)"
-            name="price"
-            type="number"
-            value={formData.price}
+            label="Номер телефона"
+            name="phone"
+            value={formData.phone}
             onChange={handleChange}
-            error={!!errors.price}
-            helperText={errors.price}
+            error={!!errors.phone}
+            helperText={errors.phone}
             required
           />
         </Grid>
-        {/* Add other fields as needed */}
         <Grid item xs={12}>
           <Button 
             type="submit" 
@@ -121,7 +118,7 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
             size="large"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Adding Dish...' : 'Add Dish'}
+            {isSubmitting ? 'Оформление...' : 'Оформить заказ'}
           </Button>
         </Grid>
       </Grid>
@@ -129,4 +126,4 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
   );
 };
 
-export default DishForm;
+export default CheckoutForm;

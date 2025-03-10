@@ -11,3 +11,14 @@ export interface IDishShort {
   export type FirebaseResponse<T> = {
     [key: string]: T;
   };
+  
+  export interface IBasket {
+    dish: IDish;
+    count: number;
+  }
+  
+  export interface IBasketState {
+    items: IBasket[];
+    totalPrice: number;
+    totalCount: number;
+  }

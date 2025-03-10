@@ -4,7 +4,12 @@ import DishCard from '../../components/dish-card/dish-card';
 import { dishService } from '../../services/dish-service';
 import { IDish } from '../../type';
 
-const Home = () => {
+interface HomeProps {
+  addDishToBasket: (dish: IDish) => void;
+  handleSyncBasketWithDishes: (dishes: IDish[]) => void;
+}
+
+const Home = ({ addDishToBasket, handleSyncBasketWithDishes }: HomeProps) => {
   const [dishes, setDishes] = useState<IDish[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,6 +20,7 @@ const Home = () => {
         setLoading(true);
         const dishesData = await dishService.getAllDishes();
         setDishes(dishesData);
+        handleSyncBasketWithDishes(dishesData);
       } catch (err) {
         console.error('Error fetching dishes:', err);
         setError('Failed to load dishes');
@@ -22,9 +28,8 @@ const Home = () => {
         setLoading(false);
       }
     };
-
     fetchDishes();
-  }, []);
+  }, [handleSyncBasketWithDishes]);
 
   if (loading) {
     return (
@@ -57,7 +62,7 @@ const Home = () => {
       <Grid container spacing={2}>
         {dishes.map((dish) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dish.id}>
-            <DishCard dish={dish} />
+            <DishCard dish={dish} addDishToBasket={addDishToBasket} />
           </Grid>
         ))}
       </Grid>
