@@ -70,7 +70,7 @@ const Checkout = ({ basketState, setBasketState }: CheckoutProps) => {
 
       await axios.post('https://your-firebase-url/orders.json', orderData);
       
-      // Очистка корзины после успешного заказа
+
       const emptyBasket = {
         items: [],
         totalCount: 0,
@@ -82,7 +82,7 @@ const Checkout = ({ basketState, setBasketState }: CheckoutProps) => {
       
       setSuccess(true);
       
-      // Редирект на главную через 3 секунды
+
       setTimeout(() => {
         navigate('/');
       }, 3000);

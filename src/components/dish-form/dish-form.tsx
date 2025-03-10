@@ -1,13 +1,13 @@
-// components/dish-form/dish-form.tsx
+
 import { useState } from 'react';
 import { Box, TextField, Button, Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-// Assuming you have types defined
+
 interface DishData {
   name: string;
   description: string;
   price: number;
-  // Add other fields as needed
+
 }
 
 interface DishFormProps {
@@ -20,14 +20,12 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
     name: '',
     description: '',
     price: 0,
-    // Initialize other fields as needed
   });
 
   const [errors, setErrors] = useState({
     name: '',
     description: '',
     price: '',
-    // Initialize error fields for validation
   });
 
   const validateForm = (): boolean => {
@@ -111,7 +109,7 @@ const DishForm = ({ onSubmit, isSubmitting }: DishFormProps) => {
             required
           />
         </Grid>
-        {/* Add other fields as needed */}
+      
         <Grid item xs={12}>
           <Button 
             type="submit" 
